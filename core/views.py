@@ -18,7 +18,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         saldos_contas = []
         for conta in Conta.objects.ativas():
-            saldos_contas.append(['%s - R$ %d'%(conta.descricao, conta.get_saldo), conta.get_saldo])
+            saldos_contas.append(['%s - R$ %d'%(conta.descricao, conta.get_saldo), str(conta.get_saldo).replace(',','.')])
         context['saldos_contas'] = saldos_contas
 
         context['saldo_total'] = Conta.objects.get_somatorio_saldo_contas_ativas()

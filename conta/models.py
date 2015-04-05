@@ -44,7 +44,7 @@ class Conta(models.Model):
 
     @property
     def get_saldo(self):
-        total = Lancamento.objects.filter(conta=self).aggregate(total=Sum('valor'))['total']
+        total = Lancamento.objects.filter(conta=self, situacao='C').aggregate(total=Sum('valor'))['total']
         if not total:
             return float('0.00')
         return float(total)

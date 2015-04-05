@@ -1,7 +1,7 @@
 {% extends 'core/defaults/list.html' %}
 {% load bootstrap3 %}
 
-{% block title %}Lancamentos{% endblock %}
+{% block title %}Lançamentos{% endblock %}
 
 {% block content %}
 <div class="panel panel-default">
@@ -15,8 +15,10 @@
     <tr>
       <th>Descrição</th>
       <th>Situação</th>
-      <th>Data</th>
+      <th>Vencimento</th>
       <th>Valor</th>
+      <th>Tipo</th>
+      <th>Classificação</th>
       <th>Alterar</th>
       <th>Excluir</th>
     </tr>
@@ -34,6 +36,8 @@
       </td>
       <td>{{ lancamento.data_lancamento|date:'d/m/Y' }}</td>
       <td>R$ {{ lancamento.valor|floatformat:2 }}</td>
+      <td>{{ lancamento.get_tipo }}</td>
+      <td>{{ lancamento.get_classificacao_display }}</td>
       <td>
         {% bootstrap_button content='' href=lancamento.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
       </td>

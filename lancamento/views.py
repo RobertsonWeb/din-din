@@ -4,7 +4,7 @@ from lancamento.models import Lancamento
 
 class LancamentoCreate(CreateView):
     model = Lancamento
-    fields = ['conta', 'descricao', 'valor',  'data_lancamento', 'situacao', 'observacao']
+    fields = ['conta', 'descricao', 'valor',  'data_lancamento', 'situacao', 'classificacao', 'observacao']
     success_url = 'lancamento_list'
 
 
@@ -13,7 +13,7 @@ class LancamentoList(ListView):
 
 class LancamentoUpdate(UpdateView):
     model = Lancamento
-    fields = ['conta', 'descricao', 'valor',  'data_lancamento', 'situacao', 'observacao']
+    fields = ['conta', 'descricao', 'valor',  'data_lancamento', 'situacao', 'classificacao', 'observacao']
     success_url = 'lancamento_list'
 
 class LancamentoDelete(DeleteView):

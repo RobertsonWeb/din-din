@@ -25,16 +25,19 @@
       {% googlecharts %}
           {# named data and options can be reused #}
           {% data saldos_contas "out_data" %}
-              {% col "string" "Name" %}"{{ val }}"{% endcol %}
-              {% col "number" "Value" %}{{ val }}{% endcol %}
+              {% col "string" "Conta" %}"{{ val }}"{% endcol %}
+              {% col "number" "Saldo" %}{{ val }}{% endcol %}
           {% enddata %}
           {# you can also use global javascript variables here, #}
           {# and call functions #}
           {% options "out_options" %}
               kind: "BarChart",
               options: {
+                  title: 'Saldo atual das contas ativas',
                   width: '100%',
-                  height: 240
+                  height: 300,
+                  bar: {groupWidth: "95%"},
+                  legend: { position: "none" },
               }
           {% endoptions %}
           {# chart is assembled from container, data and options #}
@@ -47,12 +50,25 @@
       </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="pendentes">
-      <table class="table">
+      <br>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Vencimento</th>
+            <th>Conta</th>
+            <th>Saldo conta</th>
+            <th>Lançamento</th>
+            <th>Carácter</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
         {% for lancamento_pendente in lancamentos_pendentes %}
           <tr>
+            <td>{{ lancamento_pendente.data_lancamento|date:'d/m/Y' }}</td>
             <td>{{ lancamento_pendente.conta }}</td>
+            <td>{{ lancamento_pendente.conta.get_saldo }}</td>
             <td>{{ lancamento_pendente.descricao }}</td>
-            <td>{{ lancamento_pendente.tipo }}</td>
+            <td>{{ lancamento_pendente.get_tipo }}</td>
             <td>{{ lancamento_pendente.valor|floatformat:2 }}</td>
             <td>
               {% bootstrap_button content='' href=lancamento_pendente.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}

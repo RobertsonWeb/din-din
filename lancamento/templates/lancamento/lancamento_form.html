@@ -1,6 +1,23 @@
 {% extends 'core/defaults/form.html' %}
 {% load bootstrap3 %}
 
+{% block bootstrap3_extra_head %}
+<link href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
+<style>
+  #id_observacao{
+    height: 100px;
+  }
+</style>
+{% endblock %}
+
 {% block title %}
   Cadastro de Lançamento
+{% endblock %}
+
+{% block bootstrap3_extra_script %}
+  <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.pt-BR.js" charset="UTF-8"></script>
+  <script>
+    $('#id_data_lancamento').datepicker({ language: "pt-BR", format: "dd/mm/yyyy" });
+  </script>
 {% endblock %}

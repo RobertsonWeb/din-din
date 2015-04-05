@@ -14,7 +14,7 @@ class LancamentoManager(models.Manager):
 
     def pendentes(self):
         print datetime.now()+timedelta(days=7)
-        return self.filter(data_lancamento__gt=datetime.now()+timedelta(days=7), conta__ativa=True, situacao='P')
+        return self.filter(data_lancamento__lt=datetime.now()+timedelta(days=7), conta__ativa=True, situacao='P')
 
 class Lancamento(models.Model):
     SITUACOES = (
@@ -22,13 +22,19 @@ class Lancamento(models.Model):
         ('C',_('Concretizado')),
     )
 
+    CLASSIFICACOES = (
+        ('F', _('Despesa Fixa')),
+        ('V', _(u'Despesa Variável')),
+    )
+
     conta = models.ForeignKey('conta.Conta')
     descricao = models.CharField(_(u'descrição'), max_length=70)
     valor = models.DecimalField(_(u'valor'), max_digits=10, decimal_places=2)
     situacao = models.CharField(_(u'situação'), max_length=1, default=None, choices=SITUACOES)
+    classificacao = models.CharField(_(u'classificação'), max_length=1, choices=CLASSIFICACOES, default=None)
     observacao = models.TextField(_(u'observação'), blank=True, null=True)
     data_cadastro = models.DateTimeField(_('data do cadastro'), auto_now_add=True)
-    data_lancamento = models.DateTimeField(_('data'), default=None, blank=True, null=True)
+    data_lancamento = models.DateField(_('data'), default=None, blank=True, null=True)
 
 
     objects = LancamentoManager()
