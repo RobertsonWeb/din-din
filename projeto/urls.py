@@ -7,7 +7,6 @@ urlpatterns = [
     url(r'^$', include('core.urls')),
     url(r'^conta/', include('conta.urls')),
     url(r'^lancamento/', include('lancamento.urls')),
-    url(r'^usuario/', include('usuario.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
 

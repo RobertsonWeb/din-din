@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'core',
     'conta',
     'lancamento',
-    'usuario',
 )
 
 MIDDLEWARE_CLASSES = (
