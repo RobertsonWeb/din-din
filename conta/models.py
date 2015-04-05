@@ -32,7 +32,7 @@ class Conta(models.Model):
         verbose_name_plural =   _(u'contas')
 
     def __unicode__(self):
-        return self.descricao.upper()
+        return '%s - Saldo: R$ %d' % (self.descricao.upper(), self.get_saldo)
 
     @property
     def get_absolute_url(self):

@@ -16,6 +16,7 @@
       <th>Descrição</th>
       <th>Situação</th>
       <th>Vencimento</th>
+      <th>Prazo</th>
       <th>Valor</th>
       <th>Tipo</th>
       <th>Classificação</th>
@@ -35,6 +36,15 @@
         {% endifequal %}
       </td>
       <td>{{ lancamento.data_lancamento|date:'d/m/Y' }}</td>
+      <td>
+        {% ifequal lancamento.get_prazo 'No prazo' %}
+          <span class="label label-success">No prazo</span>
+        {% endifequal %}
+
+        {% ifequal lancamento.get_prazo 'Vencido' %}
+          <span class="label label-danger">Vencido</span>
+        {% endifequal %}
+      </td>
       <td>R$ {{ lancamento.valor|floatformat:2 }}</td>
       <td>{{ lancamento.get_tipo }}</td>
       <td>{{ lancamento.get_classificacao_display }}</td>

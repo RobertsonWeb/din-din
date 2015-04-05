@@ -65,11 +65,11 @@
         {% for lancamento_pendente in lancamentos_pendentes %}
           <tr>
             <td>{{ lancamento_pendente.data_lancamento|date:'d/m/Y' }}</td>
-            <td>{{ lancamento_pendente.conta }}</td>
-            <td>{{ lancamento_pendente.conta.get_saldo }}</td>
+            <td>{{ lancamento_pendente.conta.descricao }}</td>
+            <td>R$ {{ lancamento_pendente.conta.get_saldo|floatformat:2 }}</td>
             <td>{{ lancamento_pendente.descricao }}</td>
             <td>{{ lancamento_pendente.get_tipo }}</td>
-            <td>{{ lancamento_pendente.valor|floatformat:2 }}</td>
+            <td>R$ {{ lancamento_pendente.valor|floatformat:2 }}</td>
             <td>
               {% bootstrap_button content='' href=lancamento_pendente.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
             </td>

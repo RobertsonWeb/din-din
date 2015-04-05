@@ -23,8 +23,8 @@ class Lancamento(models.Model):
     )
 
     CLASSIFICACOES = (
-        ('F', _('Despesa Fixa')),
-        ('V', _(u'Despesa Variável')),
+        ('F', _('Fixo')),
+        ('V', _(u'Variável')),
     )
 
     conta = models.ForeignKey('conta.Conta')
@@ -58,6 +58,24 @@ class Lancamento(models.Model):
     @property
     def get_tipo(self):
         if self.valor > 0.00:
-            return 'A receber'
+            if self.situacao == 'P':
+                return 'A receber'
+            else:
+                return 'Recebido'
         else:
-            return 'A pagar'
+            if self.situacao == 'P':
+                return 'A pagar'
+            else:
+                return 'Pago'
+
+    @property
+    def get_prazo(self):
+        if self.situacao == 'C':
+            return ''
+
+        if self.data_lancamento > datetime.now():
+            print 'No prazo'
+            return 'No prazo'
+        else:
+            print 'Vencido'
+            return 'Vencido'
