@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#situacao" aria-controls="situacao" role="tab" data-toggle="tab">{% bootstrap_icon 'eye-open' %} Situação</a>
+    </li>
+    <li role="presentation">
+      <a href="#pendentes" aria-controls="pendentes" role="tab" data-toggle="tab">{% bootstrap_icon 'time' %} {{lancamentos_pendentes|length}} Lançamentos pendentes para os próximos 07 dias</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="situacao">
+      {% load googlecharts %}
+      {# container #}
+      <div id="out"></div>
+      {% googlecharts %}
+          {# named data and options can be reused #}
+          {% data saldos_contas "out_data" %}
+              {% col "string" "Name" %}"{{ val }}"{% endcol %}
+              {% col "number" "Value" %}{{ val }}{% endcol %}
+          {% enddata %}
+          {# you can also use global javascript variables here, #}
+          {# and call functions #}
+          {% options "out_options" %}
+              kind: "BarChart",
+              options: {
+                  width: '100%',
+                  height: 240
+              }
+          {% endoptions %}
+          {# chart is assembled from container, data and options #}
+          {% graph "out" "out_data" "out_options" %}
+      {% endgooglecharts %}
+      <div class="panel panel-default">
+        <div class="panel-body">
+          Saldo total entre as contas ativas: <strong>R$ {{ saldo_total|floatformat:2 }}</strong>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="pendentes">
+      <table class="table">
+        {% for lancamento_pendente in lancamentos_pendentes %}
+          <tr>
+            <td>{{ lancamento_pendente.conta }}</td>
+            <td>{{ lancamento_pendente.descricao }}</td>
+            <td>{{ lancamento_pendente.tipo }}</td>
+            <td>{{ lancamento_pendente.valor|floatformat:2 }}</td>
+            <td>
+              {% bootstrap_button content='' href=lancamento_pendente.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td>
+              <div class="alert alert-info">Nenhum lançamento pendente para os próximos 07 dias!</div>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'core/defaults/list.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Lancamentos{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a href="{% url 'lancamento_add' %}" class="btn btn-md btn-success">Cadastrar lançamento</a>
+  </div>
+</div>
+
+<table class="table table-responsive table-hover" role="table">
+  <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Situação</th>
+      <th>Data</th>
+      <th>Valor</th>
+      <th>Alterar</th>
+      <th>Excluir</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lancamento in object_list %}
+    <tr>
+      <td>{{ lancamento }}</td>
+      <td>
+        {% ifequal lancamento.situacao 'P' %}
+          Projetado
+        {% else %}
+          Concretizado
+        {% endifequal %}
+      </td>
+      <td>{{ lancamento.data_lancamento|date:'d/m/Y' }}</td>
+      <td>R$ {{ lancamento.valor|floatformat:2 }}</td>
+      <td>
+        {% bootstrap_button content='' href=lancamento.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+      </td>
+      <td>
+        {% bootstrap_button content='' href=lancamento.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

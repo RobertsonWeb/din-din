@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block extra_head %}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{% bootstrap_icon 'glyphicon glyphicon-lock' %} Recuperação de senha</h1>
+
+<span class="alert alert-success">Senha alterada com sucesso</span>
+
+<br /><br />
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'core/defaults/list.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Contas{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a href="{% url 'conta_add' %}" class="btn btn-md btn-success">Cadastrar conta</a>
+  </div>
+</div>
+
+<table class="table table-responsive table-hover" role="table">
+  <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Saldo</th>
+      <th>Situação</th>
+      <th>Alterar</th>
+      <th>Excluir</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for conta in object_list %}
+    <tr>
+      <td>{{ conta }}</td>
+      <td>R$ {{ conta.get_saldo|floatformat:2 }}</td>
+      <td>
+        {% if conta.ativa %}
+          {% bootstrap_icon "thumbs-up" %}
+        {% else %}
+          {% bootstrap_icon "thumbs-down" %}
+        {% endif %}
+      </td>
+      <td>
+        {% bootstrap_button content='' href=conta.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+      </td>
+      <td>
+        {% bootstrap_button content='' href=conta.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
