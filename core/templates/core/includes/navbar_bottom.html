@@ -1,8 +1,16 @@
 {% load bootstrap3 %}
 {% block navbar_bottom %}
-<nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container">
-    Din-din - Licenced by GPL
-  </div>
-</nav>
+<footer>
+  <nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <div class="navbar-header">
+        <br>
+        <span class="label label-info">{% bootstrap_icon 'user' %}</span>
+        <span class="label label-default">{{ user|upper }}</span>
+        <span class="label label-info">{% bootstrap_icon 'bookmark' %}</span>
+        <span class="label label-default">Din-din - Controle de Finança Pessoa - Versão 0.1 - Software Livre - Licenciado através da GPL</span>
+      </div>
+    </div>
+  </nav>
+</footer>
 {% endblock %}
